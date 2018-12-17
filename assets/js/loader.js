@@ -2,7 +2,7 @@ let interval;
 let allWriteText;
 
 class Loader {
-    constructor(DOM= {}, texts= [], options= { deletedDOM: true, bodyClass: 'loading' }) {
+    constructor(DOM= {}, texts= [], options = { deletedDOM: true, bodyClass: 'loading', hideClass: 'hide', showClass: 'show' }) {
         this.texts = texts;
         this.DOM = DOM;
         this.options = options;
@@ -11,6 +11,9 @@ class Loader {
     start(index = 0) {
         if(!document.body.classList.contains(this.options.bodyClass)) {
             document.body.classList.add(this.options.bodyClass);
+        }
+        if(!document.querySelector(this.DOM.loaderContainer).classList.contains(this.options.showClass)) {
+            document.querySelector(this.DOM.loaderContainer).classList.add(this.options.showClass);
         }
         allWriteText = index;
         if(index <= this.texts.length-1) {
@@ -34,8 +37,7 @@ class Loader {
                 writeTextIndex++;
             },duration*1000);
         }else {
-            if(this.options.deletedDOM)
-                this.finish();
+            this.finish();
         }
     }
 
@@ -45,6 +47,15 @@ class Loader {
 
     finish() {
         document.body.classList.remove(this.options.bodyClass);
-        document.querySelector(this.DOM.loaderContainer).remove();
+        if(this.options.deletedDOM)
+            document.querySelector(this.DOM.loaderContainer).remove();
+        else
+            this.hide();
+    }
+
+    hide() {
+        document.body.classList.remove(this.options.bodyClass);
+        document.querySelector(this.DOM.loaderContainer).classList.remove(this.options.showClass);
+        document.querySelector(this.DOM.loaderContainer).classList.add(this.options.hideClass);
     }
 }

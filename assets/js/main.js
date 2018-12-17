@@ -16,8 +16,10 @@ var loaderTexts = [
 ];
 
 var options = {
-    deletedDOM: true,
-    bodyClass: 'loading'
+    deletedDOM: false,
+    bodyClass: 'loading',
+    hideClass: 'hide',
+    showClass: 'show'
 };
 
 (function() {
